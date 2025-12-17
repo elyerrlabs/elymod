@@ -60,7 +60,7 @@ class ServiceProvider extends Provider
         if (file_exists($this->vendorAutoload)) {
             require $this->vendorAutoload;
 
-            $this->loadViewsFrom($this->views, namespace: ucfirst($this->getModuleName()));
+            $this->loadViewsFrom($this->views, ucfirst($this->getModuleName()));
             $this->registerRoutes();
             $this->registerMiddlewares();
             $this->registerMigrations();
@@ -100,6 +100,17 @@ class ServiceProvider extends Provider
         return strtolower(explode('/', $this->decodeComposer()->name)[1]);
     }
 
+    /**
+     * Generate view prefix
+     * @return string
+     */
+    private function generateViewPrefix()
+    {
+        $moduleName = str_replace("-", " ", $this->getModuleName());
+
+        return str_replace(" ", "", ucwords($moduleName));
+    }
+
 
     /**
      * Modulo base path
@@ -136,11 +147,9 @@ class ServiceProvider extends Provider
      */
     protected function registerRoutes()
     {
-        $routePrefixName = 'modules.' . str_replace('/', '.', $this->decodeComposer()->name);
         $slugIdentifier = $this->getModuleName();
-
         Route:: as("module.{$slugIdentifier}.")->group(
-            function () use ($routePrefixName, $slugIdentifier) {
+            function () use ($slugIdentifier) {
 
                 // Admin routes
                 if (file_exists($this->routes . '/admin.php')) {
@@ -148,9 +157,9 @@ class ServiceProvider extends Provider
                         'prefix' => "{$slugIdentifier}/admin",
                         'as' => "admin.",
                         'middleware' => ['web'],
-                        'module' => $slugIdentifier, // DO NOT REMOVE
-                        'module_type' => 'modules', // DO NOT REMOVE
-                        'module_path' => $this->moduleBasePath($slugIdentifier) // DO NOT REMOVE
+                        'module' => $this->generateViewPrefix(), // DO NOT REMOVE
+                        'module_type' => 'third-party', // DO NOT REMOVE
+                        'module_path' => $this->moduleBasePath($this->generateViewPrefix()) // DO NOT REMOVE
                     ], function () {
                         require $this->routes . '/admin.php';
                     });
@@ -163,9 +172,9 @@ class ServiceProvider extends Provider
                         'prefix' => "{$slugIdentifier}/api",
                         'as' => 'api.',
                         'middleware' => ['web'],
-                        'module' => $slugIdentifier, // DO NOT REMOVE
-                        'module_type' => 'modules', // DO NOT REMOVE
-                        'module_path' => $this->moduleBasePath($slugIdentifier) // DO NOT REMOVE
+                        'module' => $this->generateViewPrefix(), // DO NOT REMOVE
+                        'module_type' => 'third-party', // DO NOT REMOVE
+                        'module_path' => $this->moduleBasePath($this->generateViewPrefix()) // DO NOT REMOVE
                     ], function () {
                         require $this->routes . '//api.php';
                     });
@@ -178,16 +187,15 @@ class ServiceProvider extends Provider
                         'prefix' => $slugIdentifier,
                         'as' => 'web.',
                         'middleware' => ['web'],
-                        'module' => $slugIdentifier, // DO NOT REMOVE
-                        'module_type' => 'modules', // DO NOT REMOVE
-                        'module_path' => $this->moduleBasePath($slugIdentifier) // DO NOT REMOVE
+                        'module' => $this->generateViewPrefix(), // DO NOT REMOVE
+                        'module_type' => 'third-party', // DO NOT REMOVE
+                        'module_path' => $this->moduleBasePath($this->generateViewPrefix()) // DO NOT REMOVE
                     ], function () {
                         require $this->routes . '/web.php'; // DO NOT REMOVE
                     });
                 }
             }
         );
-
     }
 
     /**
