@@ -23,6 +23,9 @@
     "laravel/framework": "^12.42",
     "elyerr/api-response": "^1.0"
   },
+  "require-dev": {
+    "elyerr/oauth2-passport-server": "^5.0"
+  },
   "scripts": {
     "post-autoload-dump": [
       "php artisan assets:publish"
