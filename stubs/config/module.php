@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Elymod package.
+ * This file is part of the {{ Module }}}} package.
  *
  * It defines the base configuration for the identity module.
  * These settings control module metadata and activation state.
@@ -19,7 +19,7 @@ return [
     | Human-readable name used for display purposes.
     |
     */
-    'name' => 'Elymod Module',
+    'name' => '{{ Module }} Module',
 
     /*
     |--------------------------------------------------------------------------

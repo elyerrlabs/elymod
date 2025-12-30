@@ -27,6 +27,6 @@ return [
   */
 
   // Example morph models
-  // (new \App\Models\Elymod())->tag => \App\Models\Elymod::class,
+  // (new \App\Models\{{ Module }}())->tag => \App\Models\{{ Module }}::class,
 
 ];

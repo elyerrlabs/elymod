@@ -11,7 +11,7 @@
  *   third-party:{module}:{rate_limit_name}
  *
  * Example:
- *   throttle:third-party:elymod:web
+ *   throttle:third-party:{{ module }}}:web
  *
  * Module developers can review existing modules to see
  * real-world usage examples.

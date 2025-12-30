@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Elyerr Core Identity package.
+ * This file is part of the {{ Module }} package.
  *
  * It defines configuration flags used to enable or disable
  * specific routes or services at runtime.

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Elymod package.
+ * This file is part of the {{ Module }}}} package.
  *
  * It defines shared menu configuration for the identity system.
  * Menus declared here can be merged and consumed by core, system,
@@ -41,10 +41,10 @@ return [
         'admin_dashboard' => [
 
             /*
-            'elymod-admin' => [
-                'id'      => 'elymod-admin',
+            '{{ module }}-admin' => [
+                'id'      => '{{ module }}-admin',
                 'name'    => 'ElyMod Admin',
-                'route'   => 'module.elymod.web.welcome',
+                'route'   => 'module.{{ module }}.web.welcome',
                 'icon'    => 'mdi-security',
                 'service' => 'administrator:admin',
             ],
@@ -63,10 +63,10 @@ return [
         'user_routes' => [
 
             /*
-            'elymod-app' => [
-                'id'      => 'elymod-app',
+            '{{ module }}-app' => [
+                'id'      => '{{ module }}-app',
                 'name'    => 'ElyMod',
-                'route'   => 'module.elymod.web.welcome',
+                'route'   => 'module.{{ module }}.web.welcome',
                 'icon'    => 'mdi-application',
                 'service' => 'user:access',
             ],
@@ -88,10 +88,10 @@ return [
         */
         'admin_routes' => [
             /*
-            'elymod-admin-app' => [
-                'id'      => 'elymod-app',
+            '{{ module }}-admin-app' => [
+                'id'      => '{{ module }}-app',
                 'name'    => 'ElyMod',
-                'route'   => 'module.elymod.web.welcome',
+                'route'   => 'module.{{ module }}.web.welcome',
                 'icon'    => 'mdi-application',
                 'service' => 'user:access',
             ],
@@ -109,10 +109,10 @@ return [
         'user_settings' => [
 
             /*
-            'elymod-settings' => [
-                'id'      => 'elymod-settings',
+            '{{ module }}-settings' => [
+                'id'      => '{{ module }}-settings',
                 'name'    => 'ElyMod Settings',
-                'route'   => 'module.elymod.web.settings',
+                'route'   => 'module.{{ module }}.web.settings',
                 'icon'    => 'mdi-cog',
                 'service' => 'user:settings',
             ],
@@ -137,9 +137,9 @@ return [
     'admin_routes' => [
         /*
         [
-            'id' => 'elymod',
+            'id' => '{{ module }}',
             'name' => 'ElyMod',
-            'route' => 'module.elymod.web.welcome',
+            'route' => 'module.{{ module }}.web.welcome',
             'icon' => 'mdi-store-cog',
             'service' => true,
             'position' => 8,
