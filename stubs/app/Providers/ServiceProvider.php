@@ -62,7 +62,7 @@ class ServiceProvider extends Provider
         if (file_exists($this->vendorAutoload)) {
             require $this->vendorAutoload;
 
-            $this->loadViewsFrom($this->views, ucfirst($this->getModuleName()));
+            $this->loadViewsFrom($this->views, $this->generateViewPrefix());
             $this->registerRoutes();
             $this->registerMiddlewares();
             $this->registerMigrations();
