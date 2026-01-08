@@ -149,11 +149,13 @@ class ServiceProvider extends Provider
      *
      * @return void
      */
-    protected function registerRoutes()
+       protected function registerRoutes()
     {
         $slugIdentifier = $this->getModuleName();
+        $configKey = "third-party.{$slugIdentifier}.";
+
         Route:: as("module.{$slugIdentifier}.")->group(
-            function () use ($slugIdentifier) {
+            function () use ($slugIdentifier, $configKey) {
 
                 // Admin routes
                 if (file_exists($this->routes . '/admin.php')) {
@@ -162,6 +164,7 @@ class ServiceProvider extends Provider
                         'as' => "admin.",
                         'middleware' => ['web'],
                         'module' => $this->generateViewPrefix(), // DO NOT REMOVE
+                        'config_key' => $configKey, // DO NOT REMOVE
                         'module_type' => 'third-party', // DO NOT REMOVE
                         'module_path' => $this->moduleBasePath($this->generateViewPrefix()) // DO NOT REMOVE
                     ], function () {
@@ -177,6 +180,7 @@ class ServiceProvider extends Provider
                         'as' => 'api.',
                         'middleware' => ['api'],
                         'module' => $this->generateViewPrefix(), // DO NOT REMOVE
+                        'config_key' => $configKey, // DO NOT REMOVE
                         'module_type' => 'third-party', // DO NOT REMOVE
                         'module_path' => $this->moduleBasePath($this->generateViewPrefix()) // DO NOT REMOVE
                     ], function () {
@@ -192,6 +196,7 @@ class ServiceProvider extends Provider
                         'as' => 'web.',
                         'middleware' => ['web'],
                         'module' => $this->generateViewPrefix(), // DO NOT REMOVE
+                        'config_key' => $configKey, // DO NOT REMOVE
                         'module_type' => 'third-party', // DO NOT REMOVE
                         'module_path' => $this->moduleBasePath($this->generateViewPrefix()) // DO NOT REMOVE
                     ], function () {
@@ -204,6 +209,7 @@ class ServiceProvider extends Provider
                         'as' => 'public.',
                         'middleware' => ['web'],
                         'module' => $this->generateViewPrefix(), // DO NOT REMOVE
+                        'config_key' => $configKey, // DO NOT REMOVE
                         'module_type' => 'third-party', // DO NOT REMOVE
                         'module_path' => $this->moduleBasePath($this->generateViewPrefix()) // DO NOT REMOVE
                     ], function () {
