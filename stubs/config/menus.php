@@ -119,6 +119,20 @@ return [
             */
 
         ],
+
+
+        'admin_settings' => [
+
+            /*
+            '{{ module }}-settings' => [
+                'id'      => '{{ module }}-settings',
+                'name'    => 'ElyMod Settings',
+                'route'   => 'module.{{ module }}.web.settings',
+                'icon'    => 'mdi-cog',
+                'service' => 'user:settings',
+               ],
+            */
+        ]
     ],
 
     /*
