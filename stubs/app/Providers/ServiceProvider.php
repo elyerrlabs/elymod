@@ -242,9 +242,9 @@ class ServiceProvider extends Provider
             // Merge configs
             switch ($key) {
                 case 'rate_limit':
-                    $rate_limit['third-party'][strtolower($moduleName)] = $loadFile;
-                    $merged = $this->mergeConfigSmart($rate_limit, $currentConfig);
-                    config()->set($key, $merged);
+                    //$rate_limit['third-party'][strtolower($moduleName)] = $loadFile;
+                    //$merged = $this->mergeConfigSmart($rate_limit, $currentConfig);
+                    //config()->set($key, $merged);
                     break;
 
                 case 'routes':
