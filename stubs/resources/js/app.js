@@ -6,6 +6,8 @@ import { setupI18n, __ } from "@{{ module }}/config/locale.js";
 
 setupI18n();
 window.__ = __;
+window.$server = $server
+window.$notify = $notify
 
 createInertiaApp({
   resolve: (name) => require(`./pages/${name}.vue`).default,
