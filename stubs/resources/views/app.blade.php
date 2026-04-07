@@ -8,14 +8,14 @@
 
     <link rel="icon" href="{{ asset('third-party/{{ module }}/favicon.png') }}" type="image/png">
 
-    <link nonce={{ $nonce }} href="{{ asset('third-party/{{ module }}/css/app.css') }}" rel="stylesheet">
+    <link nonce={{ $nonce }} href="{{ module_mix('css/app.css') }}" rel="stylesheet">
 
     <x-{{ module }}-translator />
     @inertiaHead
 </head>
 <body>
     @inertia
-    <script nonce={{ $nonce }} src="{{ asset('third-party/{{ module }}/js/app.js') }}"></script>
+    <script nonce={{ $nonce }} src="{{ module_mix('js/app.js') }}"></script>
 </body>
 
 </html>

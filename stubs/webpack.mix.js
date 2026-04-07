@@ -16,8 +16,7 @@ mix.webpackConfig({
 
 mix.js('resources/js/app.js', 'js/app.js')
     .vue({ version: 3 })
-    .version()
     .postCss('resources/css/app.css', 'css/app.css', [
         require('@tailwindcss/postcss'),
         require("autoprefixer"),
-    ]);
+    ]).version();

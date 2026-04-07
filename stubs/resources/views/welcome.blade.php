@@ -10,7 +10,7 @@
 
     <link rel="icon" href="{{ asset('third-party/{{ module }}/favicon.png') }}" type="image/png">
 
-    <link nonce={{ $nonce }} href="{{ asset('third-party/{{ module }}/css/app.css') }}" rel="stylesheet">
+    <link nonce={{ $nonce }} href="{{ module_mix('css/app.css') }}" rel="stylesheet">
     <style nonce="{{ $nonce }}">
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
