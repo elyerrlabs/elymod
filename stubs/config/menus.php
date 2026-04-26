@@ -44,7 +44,7 @@ return [
             '{{ module }}-admin' => [
                 'id'      => '{{ module }}-admin',
                 'name'    => 'ElyMod Admin',
-                'route'   => 'module.{{ module }}.web.welcome',
+                'route'   => 'module.{{ module }}.admin.admin',
                 'icon'    => 'mdi-security',
                 'service' => 'administrator:admin',
             ],
@@ -66,7 +66,7 @@ return [
             '{{ module }}-app' => [
                 'id'      => '{{ module }}-app',
                 'name'    => 'ElyMod',
-                'route'   => 'module.{{ module }}.web.welcome',
+                'route'   => 'module.{{ module }}.users.user',
                 'icon'    => 'mdi-application',
                 'service' => 'user:access',
             ],
@@ -87,15 +87,13 @@ return [
         |
         */
         'admin_routes' => [
-            /*
             '{{ module }}-admin-app' => [
-                'id'      => '{{ module }}-app',
-                'name'    => 'ElyMod',
-                'route'   => 'module.{{ module }}.web.welcome',
-                'icon'    => 'mdi-application',
-                'service' => 'user:access',
+                'id' => '{{ module }}-app',
+                'name' => '{{ Module }}',
+                'route' => 'module.{{ module }}.admin.admin',
+                'icon' => 'mdi-application',
+               // 'service' => 'user:access',
             ],
-            */
         ],
 
         /*

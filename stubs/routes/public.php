@@ -12,8 +12,3 @@
  * Always evaluate whether a route truly requires a custom/global path.
  */
 
-Route::get("/example-route", function () {
-    return response()->json([
-        'message' => "example tes"
-    ]);
-});
