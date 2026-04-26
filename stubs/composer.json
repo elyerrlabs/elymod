@@ -19,7 +19,7 @@
     }
   },
   "require-dev": {
-    "elyerr/laravel-runtime": "^1.0",
+    "elyerr/laravel-runtime": "^1.1",
     "inertiajs/inertia-laravel": "^2.0",
     "elyerr/api-response": "^1.0",
     "laravel/framework": "^12.44"
