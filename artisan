@@ -3,11 +3,15 @@
 
 use Symfony\Component\Console\Input\ArgvInput;
 
-define('LARAVEL_START', microtime(true));
+try {
 
-require __DIR__ . '/vendor/autoload.php';
+    define('LARAVEL_START', microtime(true));
 
-$status = (require_once __DIR__ . '/bootstrap/app.php')
-    ->handleCommand(new ArgvInput());
+    require __DIR__ . '/vendor/autoload.php';
 
-exit($status);
+    $status = (require_once __DIR__ . '/bootstrap/app.php')->handleCommand(new ArgvInput());
+
+    exit($status);
+} catch (\Throwable $th) {
+    echo "php artisan command is available only in dev mode\n";
+}
