@@ -1,4 +1,4 @@
-@extends('Example::layouts.pages')
+@extends('{{ Module }}::layouts.pages')
 
 @push('head')
     <title>{{ __('Module Dashboard') }} | {{ config('app.name') }}</title>
