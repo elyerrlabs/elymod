@@ -1,12 +1,14 @@
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
-import { $notify } from "@{{ module }}/config/notify.js";
-import { $server } from "@{{ module }}/config/axios.js";
-import { setupI18n, __ } from "@{{ module }}/config/locale.js";
+import { $notify } from "@/config/notify.js";
+import { $server } from "@/config/axios.js";
+import { errors } from "@/config/helpers.js";
+import { setupI18n, __ } from "@/config/locale.js";
 
 setupI18n();
 window.__ = __;
-window.$server = $server
+window.$server = $server;
+window.$errors = errors;
 window.$notify = $notify
 
 createInertiaApp({
@@ -17,6 +19,7 @@ createInertiaApp({
 
     app.config.globalProperties.$server = $server;
     app.config.globalProperties.$notify = $notify;
+    app.config.globalProperties.$errors = $errors;
     app.config.globalProperties.__ = __;
 
     app.use(plugin);

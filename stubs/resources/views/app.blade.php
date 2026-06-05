@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ Module }} – Admin</title>
+@push('head')
+    <title>{{ Module }} Admin Manager</title>
+@endpush
 
-    <link rel="icon" href="{{ asset('third-party/{{ module }}/favicon.png') }}" type="image/png">
-
+@push('css')
     <link nonce={{ $nonce }} href="{{ module_mix('css/app.css') }}" rel="stylesheet">
+@endpush
 
-    <x-{{ module }}-translator />
-    @inertiaHead
-</head>
-<body>
+@section('content')
     @inertia
-    <script nonce={{ $nonce }} src="{{ module_mix('js/app.js') }}"></script>
-</body>
+@endsection
 
-</html>
+@push('js')
+    <script nonce={{ $nonce }} src="{{ module_mix('js/app.js') }}"></script>
+@endpush
