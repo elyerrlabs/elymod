@@ -11,4 +11,3 @@
  * can lead to route clutter, weak modular boundaries, and maintenance issues.
  * Always evaluate whether a route truly requires a custom/global path.
  */
-
