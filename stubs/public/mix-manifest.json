@@ -1,12 +1,5 @@
 {
-    "/js/app.js": "/js/app.js?id=580edf116cc5fa3dccf327aad7475a96",
-    "/css/app.css": "/css/app.css?id=01b5dba4fe20bf5d8eb4acf54beea20e",
-    "/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?1c5c7716b05754cb4eab190e5ed2838c": "/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?1c5c7716b05754cb4eab190e5ed2838c?id=a2bd65836e7e0a11022ab245fa729a46",
-    "/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?6f05ca9ab7b5345dbc07d1339a8b593b": "/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?6f05ca9ab7b5345dbc07d1339a8b593b?id=361c2c3c1e1e4d82f04d825edaa07550",
-    "/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?8ae0d37556ff1e685de2acb2a675ebaf": "/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?8ae0d37556ff1e685de2acb2a675ebaf?id=151d5eddd0b377f0c7f8df5d8515d654",
-    "/fonts/vendor/@fortawesome/fontawesome-free/webfa-v4compatibility.woff2?e4340c52a50e727c6afaccbdaae686e2": "/fonts/vendor/@fortawesome/fontawesome-free/webfa-v4compatibility.woff2?e4340c52a50e727c6afaccbdaae686e2?id=d642cac2f6fc1ec00aa8c50956f65b74",
-    "/fonts/vendor/@mdi/materialdesignicons-webfont.eot?2146c3c82b553977abc7c824eb453634": "/fonts/vendor/@mdi/materialdesignicons-webfont.eot?2146c3c82b553977abc7c824eb453634?id=a1e56f90801b53f7bb04b51750af8fe2",
-    "/fonts/vendor/@mdi/materialdesignicons-webfont.woff2?ec024da790d2972da002c9e3f0625ba5": "/fonts/vendor/@mdi/materialdesignicons-webfont.woff2?ec024da790d2972da002c9e3f0625ba5?id=0530681c9c38837cee97d33e0348c063",
-    "/fonts/vendor/@mdi/materialdesignicons-webfont.woff?e55a20c80650829ec5fdd868e583f64b": "/fonts/vendor/@mdi/materialdesignicons-webfont.woff?e55a20c80650829ec5fdd868e583f64b?id=5ea046cf34dab016c140b170c136570c",
-    "/fonts/vendor/@mdi/materialdesignicons-webfont.ttf?1fcc36272ea3e53d0031fbfedffd88cc": "/fonts/vendor/@mdi/materialdesignicons-webfont.ttf?1fcc36272ea3e53d0031fbfedffd88cc?id=bd0aa704f8f03bc198bada2abafe4862"
+    "/js/app.js": "/js/app.js?id=ec11354fbc76c92e7d1f59f8629dbf9e",
+    "/js/pages.js": "/js/pages.js?id=bae04c74e314e9b181153e99f5548587",
+    "/css/app.css": "/css/app.css?id=6d98f1287fc6ced94130460a431c99af"
 }
