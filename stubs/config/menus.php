@@ -40,15 +40,13 @@ return [
         */
         'admin_dashboard' => [
 
-            /*
-            '{{ module }}-admin' => [
-                'id'      => '{{ module }}-admin',
-                'name'    => 'ElyMod Admin',
-                'route'   => 'module.{{ module }}.admin.admin',
-                'icon'    => 'mdi-security',
+            '{{ module }}_admin' => [
+                'id' => '{{ module }}-admin',
+                'name' => '{{ module }} Admin',
+                'route' => 'module.{{ module }}.admin.admin.index',
+                'icon' => 'mdi mdi-store-cog',
                 'service' => 'administrator:admin',
             ],
-            */
 
         ],
 
@@ -62,15 +60,13 @@ return [
         */
         'user_routes' => [
 
-            /*
-            '{{ module }}-app' => [
-                'id'      => '{{ module }}-app',
-                'name'    => 'ElyMod',
-                'route'   => 'module.{{ module }}.users.user',
-                'icon'    => 'mdi-application',
-                'service' => 'user:access',
+            '{{ module }}_users' => [
+                'id' => '{{ module }}-users',
+                'name' => '{{ module }} Users',
+                'route' => 'module.{{ module }}.web.users.index',
+                'icon' => 'mdi mdi-store-cog',
+                //'service' => 'administrator:test',
             ],
-            */
 
         ],
 
@@ -90,9 +86,9 @@ return [
             '{{ module }}-admin-app' => [
                 'id' => '{{ module }}-app',
                 'name' => '{{ Module }}',
-                'route' => 'module.{{ module }}.admin.admin',
-                'icon' => 'mdi-application',
-               // 'service' => 'user:access',
+                'route' => 'module.{{ module }}.admin.admin.index',
+                'icon' => 'mdi mdi-store-cog',
+                // 'service' => 'enterprise:test',
             ],
         ],
 
@@ -109,9 +105,9 @@ return [
             /*
             '{{ module }}-settings' => [
                 'id'      => '{{ module }}-settings',
-                'name'    => 'ElyMod Settings',
+                'name'    => '{{ Module }} Settings',
                 'route'   => 'module.{{ module }}.web.settings',
-                'icon'    => 'mdi-cog',
+                'icon'    => 'mdi mdi-cog',
                 'service' => 'user:settings',
             ],
             */
@@ -121,15 +117,16 @@ return [
 
         'admin_settings' => [
 
-            /*
+
             '{{ module }}-settings' => [
-                'id'      => '{{ module }}-settings',
-                'name'    => 'ElyMod Settings',
-                'route'   => 'module.{{ module }}.web.settings',
-                'icon'    => 'mdi-cog',
-                'service' => 'user:settings',
-               ],
-            */
+                'id' => '{{ module }}-settings',
+                'name' => '{{ Module }} Settings',
+                'route' => 'module.{{ module }}.admin.settings.general',
+                'icon' => 'mdi mdi-cog',
+                'service' => 'administrator:settings',
+
+            ],
+
         ]
     ],
 
