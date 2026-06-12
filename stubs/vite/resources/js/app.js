@@ -4,6 +4,7 @@ import { $notify } from "@/config/notify.js";
 import { $server } from "@/config/axios.js";
 import { errors } from "@/config/helpers.js";
 import { setupI18n, __ } from "@/config/locale.js";
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 setupI18n();
 window.__ = __;
@@ -12,7 +13,9 @@ window.$errors = errors;
 window.$notify = $notify
 
 createInertiaApp({
-  resolve: (name) => require(`./pages/${name}.vue`).default,
+  nonce: document.querySelector('meta[name="nonce"]')?.getAttribute('content'),
+  http: $server,
+  resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob('./pages/**/*.vue')),
   setup({ el, App, props, plugin }) {
 
     const app = createApp({ render: () => h(App, props) });
