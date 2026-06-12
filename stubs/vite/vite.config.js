@@ -5,7 +5,7 @@ import inertia from '@inertiajs/vite';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-    base: '/third-party/elymod-lab/build/',
+    base: '/third-party/{{ module }}/build/',
     server: {
         watch: {
             ignored: [

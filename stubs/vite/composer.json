@@ -1,19 +1,19 @@
 {
-  "name": "elyerr/elymod-lab",
+  "name": "elyerr/{{ module }}",
   "type": "project",
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "ElymodLab\\App\\": "app/",
-      "ElymodLab\\Database\\Factories\\": "database/factories/",
-      "ElymodLab\\Database\\Seeders\\": "database/seeders/",
-      "ElymodLab\\Tests\\": "tests/"
+      "{{ Module }}\\App\\": "app/",
+      "{{ Module }}\\Database\\Factories\\": "database/factories/",
+      "{{ Module }}\\Database\\Seeders\\": "database/seeders/",
+      "{{ Module }}\\Tests\\": "tests/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "ElymodLab\\App\\Providers\\ServiceProvider"
+        "{{ Module }}\\App\\Providers\\ServiceProvider"
       ]
     }
   },
