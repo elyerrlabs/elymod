@@ -4,20 +4,39 @@ namespace Elymod\Runtime;
 
 class Installer
 {
-    public static function install(string $name): void
+    public static function install(string $name, string $driver = 'vite'): void
     {
-        $namespace = self::studly($name);       // UserAccount
-        $module = $namespace;                   // UserAccount
-        $moduleKey = self::kebab($namespace);   // user-account
+        $namespace = self::studly($name);
+        $module = $namespace;
+        $moduleKey = self::kebab($namespace);
+
+        $driver = strtolower($driver);
+
+        if (!in_array($driver, ['vite', 'mix'])) {
+            throw new \InvalidArgumentException(
+                "Invalid driver [{$driver}]. Supported drivers: vite, mix."
+            );
+        }
 
         $target = getcwd();
 
-        self::copyStub(__DIR__ . '/../stubs', $target);
-        self::processFiles($target, $namespace, $module, $moduleKey);
+        self::copyStub(
+            __DIR__ . "/../stubs/{$driver}",
+            $target
+        );
 
-        self::cleanup();
+        self::processFiles(
+            $target,
+            $namespace,
+            $module,
+            $moduleKey
+        );
 
-        echo PHP_EOL . "✔ Elymod module {$module} created successfully." . PHP_EOL;
+        self::cleanup($driver);
+
+        echo PHP_EOL;
+        echo "✔ Elymod module {$module} created successfully." . PHP_EOL;
+        echo "✔ Asset driver: {$driver}" . PHP_EOL;
     }
 
     protected static function copyStub(string $src, string $dst): void
@@ -75,12 +94,13 @@ class Installer
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $value));
     }
 
-    protected static function cleanup(): void
+    protected static function cleanup(string $driver): void
     {
         self::removeDir(__DIR__ . '/../stubs');
         self::removeDir(__DIR__ . '/../vendor');
         self::removeDir(__DIR__ . '/../composer.lock');
         self::installDependencies(__DIR__ . '/../composer.json');
+        self::installNodeDependencies($driver);
         self::removeDir(__DIR__ . '/../runtime');
     }
 
@@ -123,4 +143,37 @@ class Installer
         }
     }
 
+    protected static function installNodeDependencies(string $driver): void
+    {
+        if (!file_exists('package.json')) {
+            echo "No package.json found, skipping npm installation.\n";
+            return;
+        }
+
+        echo "Installing node dependencies...\n";
+
+        passthru('npm ci', $returnVar);
+
+        if ($returnVar !== 0) {
+            echo "Failed to install node dependencies.\n";
+            return;
+        }
+
+        echo "Node dependencies installed successfully.\n";
+
+        $command = match ($driver) {
+            'mix' => 'npm run dev',
+            'vite' => 'npm run build',
+        };
+
+        echo "Running asset build ({$command})...\n";
+
+        passthru($command, $returnVar);
+
+        if ($returnVar === 0) {
+            echo "Assets compiled successfully.\n";
+        } else {
+            echo "Asset compilation failed.\n";
+        }
+    }
 }

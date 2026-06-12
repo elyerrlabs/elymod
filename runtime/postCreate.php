@@ -6,4 +6,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $projectName = basename(getcwd());
 
-Installer::install($projectName);
+$driver = $_SERVER['ELYMOD_DRIVER'] ?? 'vite';
+
+Installer::install($projectName, $driver);
