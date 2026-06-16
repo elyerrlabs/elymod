@@ -19,7 +19,7 @@
   },
   "require-dev": {
     "elyerr/laravel-runtime": "^1.1",
-    "elyerr/api-response": "^1.0",
+    "elyerr/api-response": "^2.0",
     "laravel/framework": "^12.44"
   },
   "minimum-stability": "stable",
