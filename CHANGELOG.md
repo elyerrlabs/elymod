@@ -1,5 +1,12 @@
 # Changelog
 
+## Unrelease
+
+- Updated package.json dependencies
+- Migrate to api-response v2.0.0
+
+---
+
 ## [v2.0.0]
 
 ### Added
