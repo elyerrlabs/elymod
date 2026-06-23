@@ -3,19 +3,19 @@
 namespace Elymod;
 
 /**
- * Elymod Skeleton Installer
+ *  Elymod  Skeleton  Installer
  *
- * Features:
- * - Packagist version resolution
- * - GitHub fallback
- * - Git clone fallback
- * - Temporary workspace extraction
- * - Placeholder replacement
+ *  Features:
+ *  -  Packagist  version  resolution
+ *  -  GitHub  fallback
+ *  -  Git  clone  fallback
+ *  -  Temporary  workspace  extraction
+ *  -  Placeholder  replacement
  */
 class Installer
 {
     /**
-     * Install Elymod module
+     *  Install  Elymod  module
      */
     public static function install(string $name): void
     {
@@ -28,10 +28,10 @@ class Installer
         $tempDir = $target . '/.elymod_tmp_' . uniqid();
 
         try {
-            self::info("Installing Elymod module: {$namespace}");
-            self::info("Skeleton version: {$version}");
+            self::info("Installing  Elymod  module:  {$namespace}");
+            self::info("Skeleton  version:  {$version}");
 
-            $source = self::resolveSkeletonSource($version);
+            $source = self::resolveSkeletonSource();
 
             self::downloadSkeleton($source, $tempDir, $version);
 
@@ -50,7 +50,7 @@ class Installer
             self::removeDir($tempDir);
             self::removeDir('src');
 
-            self::success("Module '{$namespace}' created successfully!");
+            self::success("Module  '{$namespace}'  created  successfully!");
 
         } catch (\Throwable $e) {
 
@@ -65,72 +65,67 @@ class Installer
     }
 
     /**
-     * Resolve best skeleton source
-     *
-     * Priority:
-     * 1. Packagist
-     * 2. GitHub API tag
-     * 3. Direct Git fallback
+     *  Resolve  skeleton  source
      */
-    protected static function resolveSkeletonSource(string $version): array
+    protected static function resolveSkeletonSource(): array
     {
-        // Packagist source
-        $packagist = "https://repo.packagist.org/p/elyerr/elymod-app.json";
-
-        $json = @file_get_contents($packagist);
-
-        if ($json) {
-            $data = json_decode($json, true);
-
-            if (!empty($data['packages']['elyerr/elymod-app'])) {
-                self::info("Using Packagist source");
-
-                return [
-                    'type' => 'packagist',
-                    'data' => $data['packages']['elyerr/elymod-app']
-                ];
-            }
-        }
-
-        self::warning("Packagist failed, using GitHub fallback");
-
         return [
-            'type' => 'git',
-            'repo' => 'https://github.com/elyerrlabs/elymod-app.git'
+            'type' => 'packagist',
+            'package' => 'elyerr/elymod-app'
         ];
     }
 
     /**
-     * Download skeleton with fallback logic
+     *  Download  skeleton
      */
     protected static function downloadSkeleton(array $source, string $dst, string $version): void
     {
-        self::info("Downloading skeleton...");
+        self::info("Downloading  skeleton...");
 
         mkdir($dst, 0755, true);
 
-        // PACKAGIST MODE
+        /**
+         *  PACKAGIST  MODE  (IMPORTANT  FIX)
+         *  This  ensures  Packagist  installs  are  counted  correctly
+         */
         if ($source['type'] === 'packagist') {
-            // simplified: just use dist zip if available
-            self::warning("Packagist dist mode not fully implemented, fallback to git");
+
+            $package = $source['package'];
+
+            $cmd = sprintf(
+                "composer  create-project  %s  %s  %s  --no-interaction",
+                escapeshellarg($package),
+                escapeshellarg($dst),
+                escapeshellarg($version)
+            );
+
+            exec($cmd, $out, $code);
+
+            if ($code !== 0) {
+                throw new \RuntimeException("Composer  create-project  failed  for  {$package}");
+            }
+
+            self::info("Skeleton  installed  via  Packagist  (create-project)");
+            return;
         }
 
-        // GIT MODE (PRIMARY WORKING IMPLEMENTATION)
+        /**
+         *  GIT  FALLBACK
+         */
         $repo = $source['repo'];
 
-        $cmd = "git clone --depth 1 {$repo} {$dst}";
-
+        $cmd = "git  clone  --depth  1  {$repo}  {$dst}";
         exec($cmd, $out, $code);
 
         if ($code !== 0) {
-            throw new \RuntimeException("Git clone failed from {$repo}");
+            throw new \RuntimeException("Git  clone  failed  from  {$repo}");
         }
 
-        self::info("Skeleton downloaded successfully");
+        self::info("Skeleton  downloaded  via  Git");
     }
 
     /**
-     * Move directory contents
+     *  Move  directory  contents
      */
     protected static function moveDirectory(string $src, string $dst): void
     {
@@ -169,7 +164,7 @@ class Installer
     }
 
     /**
-     * Replace placeholders
+     *  Replace  placeholders
      */
     protected static function processFiles($path, $namespace, $module, $key): void
     {
@@ -177,7 +172,7 @@ class Installer
             new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)
         );
 
-        $search = ['ElymodApp', 'Elymod App', 'elymod-app', 'elymod app'];
+        $search = ['ElymodApp', 'Elymod  App', 'elymod-app', 'elymod  app'];
         $replace = [$namespace, $module, $key, $key];
 
         foreach ($it as $file) {
@@ -196,9 +191,6 @@ class Installer
         }
     }
 
-    /**
-     * Skeleton version
-     */
     protected static function getSkeletonVersion(): string
     {
         $composer = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
@@ -207,33 +199,33 @@ class Installer
     }
 
     /**
-     * Composer install (via elyscope)
+     *  Composer  install
      */
     protected static function installDependencies(string $path): void
     {
-        self::info("Installing dependencies...");
+        self::info("Installing  dependencies...");
 
-        exec("cd {$path} && elyscope install", $code);
+        exec("cd  {$path}  &&  elyscope  install", $code);
 
         if ($code !== 0) {
-            self::error("Dependency install failed");
+            self::error("Dependency  install  failed");
         }
     }
 
     /**
-     * Node install
+     *  Node  install
      */
     protected static function installNodeDependencies(string $path): void
     {
         if (!file_exists($path . '/package.json'))
             return;
 
-        self::info("Installing node dependencies...");
+        self::info("Installing  node  dependencies...");
 
-        exec("cd {$path} && npm ci && npm run build", $code);
+        exec("cd  {$path}  &&  npm  ci  &&  npm  run  build", $code);
 
         if ($code !== 0) {
-            self::error("Node build failed");
+            self::error("Node  build  failed");
         }
     }
 
@@ -263,7 +255,7 @@ class Installer
 
     protected static function studly($v)
     {
-        return str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $v)));
+        return str_replace('  ', '', ucwords(str_replace(['-', '_'], '  ', $v)));
     }
 
     protected static function kebab($v)
@@ -273,18 +265,18 @@ class Installer
 
     protected static function info($m)
     {
-        echo "[INFO] $m\n";
+        echo "[INFO]  $m\n";
     }
     protected static function warning($m)
     {
-        echo "[WARN] $m\n";
+        echo "[WARN]  $m\n";
     }
     protected static function success($m)
     {
-        echo "[OK] $m\n";
+        echo "[OK]  $m\n";
     }
     protected static function error($m)
     {
-        echo "[ERROR] $m\n";
+        echo "[ERROR]  $m\n";
     }
 }
