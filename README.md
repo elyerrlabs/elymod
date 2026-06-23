@@ -1,224 +1,269 @@
 # Elymod
 
-**Elymod** is a lightweight modular mini-framework inspired by Laravel.
+**Elymod** is the official **module installer and generator** for the OAuth2 Passport Server modular ecosystem.
 
-It is designed to build **fully independent third-party modules** that integrate with the **OAuth2 Passport Server ecosystem** while remaining isolated from the core application.
+It is not the runtime itself — it is the **entry point for creating and scaffolding modules**.
 
-Elymod behaves like a **minimal Laravel runtime**, providing only the features required to develop, test, and distribute modules without depending on a full Laravel application.
+Elymod works together with:
 
----
+- **elymod-app** → Module skeleton (base structure for every module)
+- **elyscope** → Composer + PHP-Scoper bridge/wrapper for dependency isolation
+- **elyerr/laravel-runtime** → Lightweight Laravel-like runtime
+- **OAuth2 Passport Server v8** → Core platform (host system)
 
-# Compatibility
-
-Elymod is fully compatible with **OAuth2 Passport Server v7 and later (v7+)**.
-
-Starting with OAuth2 Passport Server v7, the host application uses **Vite** as its default asset bundler. However, Elymod maintains support for both **Laravel Mix** and **Vite** when creating and developing third-party modules.
-
-Supported asset drivers:
-
-* Vite (default)
-* Laravel Mix (legacy support)
-
-This allows existing modules to continue using Laravel Mix while enabling new modules to adopt Vite.
+Together, these components form a **modular mini-framework ecosystem** designed for scalable enterprise extensions.
 
 ---
 
-# Creating Modules
+# Architecture Overview
 
-Modules can be generated directly from OAuth2 Passport Server using the built-in module generator.
+Elymod is the **installer + generator layer** of the ecosystem.
 
-### Create a module using Vite (default)
+When a module is created:
 
-```bash
-php artisan module:make UserAccount
+1. Elymod generates the module using **elymod-app (skeleton)**
+2. Dependencies are installed and resolved via **Composer**
+3. **elyscope** processes dependencies:
+   - wraps Composer resolution
+   - applies PHP-Scoper transformations
+   - rewrites namespaces into isolated module scope
+4. The module runs on top of **elyerr/laravel-runtime**
+5. OAuth2 Passport Server v8 registers the module
+
+This produces a fully isolated module with its own namespace:
+
+```
+ModuleName\Vendor\Package
 ```
 
-or explicitly:
+No collisions. No shared vendor pollution. Fully encapsulated execution.
 
-```bash
-php artisan module:make UserAccount --driver=vite
+---
+
+# What Elymod Solves
+
+Traditional modular systems in large PHP/Laravel ecosystems suffer from:
+
+- ❌ Dependency collisions between modules
+- ❌ Shared vendor pollution
+- ❌ Tight coupling to the host application
+- ❌ Hard upgrades and maintenance
+- ❌ No real isolation between teams/modules
+- ❌ Fragile plugin architectures
+
+Elymod solves this by introducing a **fully isolated modular pipeline**.
+
+---
+
+# Ecosystem Components
+
+## 🔧 Elymod (Installer & Generator)
+
+Responsible for:
+
+- Creating modules
+- Bootstrapping module structure
+- Orchestrating dependency pipeline
+- Connecting all ecosystem tools
+- Registering modules into OAuth2 Passport Server v8
+
+---
+
+## 📦 elymod-app (Skeleton)
+
+A standardized module blueprint that includes:
+
+- Laravel-like structure (lightweight)
+- Prebuilt service container setup
+- Routing, config, and lifecycle structure
+- OAuth2 Passport Server integration layer
+- Ready-to-run module foundation
+
+Every module starts from this skeleton.
+
+---
+
+## 🧠 elyscope (Composer + PHP-Scoper Bridge)
+
+**elyscope is not just PHP-Scoper.**
+
+It is a **hybrid orchestration layer** between Composer and PHP-Scoper.
+
+It is responsible for:
+
+- Intercepting Composer dependency resolution
+- Installing dependencies per module scope
+- Running PHP-Scoper transformations
+- Rewriting namespaces into isolated module space
+- Ensuring dependency graph isolation per module
+
+Example transformation:
+
+```
+Original:
+Vendor\Package\Class
+
+Scoped:
+ModuleName\Vendor\Package\Class
 ```
 
-### Create a module using Laravel Mix
+It acts as a **bridge between dependency management and isolation engine**, ensuring both worlds work together.
+
+---
+
+## ⚙️ Laravel Runtime (Execution Layer)
+
+**elyerr/laravel-runtime** provides a lightweight Laravel-like environment:
+
+- Routing system
+- Controllers lifecycle
+- Middleware pipeline
+- Service container abstraction
+- Views rendering
+- Policy execution
+
+It allows modules to behave like Laravel apps without requiring full Laravel.
+
+---
+
+## 🧩 OAuth2 Passport Server v8 (Host System)
+
+The core platform responsible for:
+
+- Authentication (OAuth2)
+- Authorization
+- Module registry
+- Module lifecycle management
+- System security and integrity
+
+---
+
+# Module Flow (How it works)
+
+When a module is created:
 
 ```bash
-php artisan module:make UserAccount --driver=mix
+php artisan module:make BlogModule
 ```
 
-The selected driver determines the frontend build environment and generated project structure.
+The system executes:
 
-> Driver selection is available only in **OAuth2 Passport Server v7+**.
+1. Elymod generates structure using **elymod-app**
+2. Composer installs dependencies
+3. **elyscope** wraps Composer + applies PHP-Scoper isolation
+4. Module is fully namespaced and sandboxed
+5. Laravel runtime initializes execution layer
+6. OAuth2 Passport Server registers module
 
 ---
 
-# Supported Drivers
+# Module Structure Output
 
-## Vite (Default)
+Each module is fully isolated:
 
-Recommended for all new modules.
-
-Features:
-
-* Fast development server
-* Hot Module Replacement (HMR)
-* Modern ES modules
-* Optimized production builds
-* Official asset pipeline for OAuth2 Passport Server v7+
-
-### Development
-
-```bash
-npm ci
-npm run build
+```
+BlogModule/
+├── app
+├── artisan
+├── bootstrap
+├── composer.json
+├── composer.lock
+├── config 
+├── database
+├── lang
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── public 
+├── resources
+├── routes
+│   ├── admin.php
+│   ├── api.php
+│   ├── console.php
+│   ├── public.php
+│   └── web.php
+├── scoper.inc.php
+├── storage
+│   └── logs
+├── temp
+├── tests
+│   ├── Feature
+│   │   └── ExampleTest.php
+│   ├── TestCase.php
+│   └── Unit
+│       └── ExampleTest.php
+└── vite.config.js
 ```
 
----
+All dependencies are rewritten into module scope:
 
-## Laravel Mix
-
-Maintained for backward compatibility.
-
-Features:
-
-* Webpack-based workflow
-* Compatible with existing modules
-* Legacy asset compilation support
-* Migration-friendly environment
-
-### Development
-
-```bash
-npm ci
-npm run dev
+```
+BlogModule\Vendor\Package
 ```
 
-> Although Laravel Mix is no longer used by the OAuth2 Passport Server host application, support remains available for third-party modules developed with Elymod.
+No global dependency leakage.
 
 ---
 
-# What is Elymod?
+# Key Benefits
 
-Elymod is both:
+### 🧩 True modular architecture
 
-* 🧩 A mini Laravel runtime for third-party module development
-* 🏗️ A modular mini-framework focused on isolation and portability
-* 🔐 A foundation for extending OAuth2 Passport Server ecosystems
+Modules behave like independent applications.
 
-It allows developers to create modules that feel like Laravel applications while remaining fully decoupled from the core platform.
+### 🔐 Full dependency isolation
 
----
+Each module has its own scoped dependency tree.
 
-# Core Features
+### ⚙️ Hybrid dependency system
 
-* 🚀 Powered by `laravel-runtime`
-* 📦 Modules behave like standalone Laravel applications
-* 🧩 Designed exclusively for third-party modules
-* 🛡️ Fail-safe architecture: module failures do not affect the core system
-* 🔁 Dynamic loading of:
+Composer + PHP-Scoper combined via elyscope bridge.
 
-  * Routes
-  * Menus
-  * Middleware
-  * Rate limits
-  * Feature flags
-* 🔐 Built for OAuth2 and Passport-based authorization platforms
-* 🏗️ Compatible with enterprise modular architectures
+### ⚡ Lightweight execution layer
 
----
+Runs on laravel-runtime instead of full Laravel stack.
 
-# Laravel Runtime Integration
+### 📦 Portable modules
 
-Elymod uses **`elyerr/laravel-runtime`** during development to provide:
+Modules can be moved between environments safely.
 
-* Route registration
-* Middleware resolution
-* View rendering
-* Resource generation
-* Controller generation
-* Request generation
-* Policy generation
+### 🏗️ Enterprise scalability
 
-This provides a familiar Laravel experience while keeping the runtime lightweight.
+Designed for large organizations and multi-team systems.
 
-> Elymod does not require a full Laravel installation in production environments.
+### 🔁 Plug-and-play lifecycle
+
+Install, enable, disable, remove without breaking the system.
 
 ---
 
-# Dependencies
+# Why this ecosystem exists
 
-## Runtime / Core
+As systems built on OAuth2 Passport Server grow, they face:
 
-### `elyerr/api-response`
+- Feature sprawl across teams
+- Dependency conflicts
+- Tight coupling between modules
+- Difficult upgrade cycles
+- Lack of isolation boundaries
 
-Provides a unified response layer for both API and web responses.
+This ecosystem solves it by introducing:
 
-### Transformer
-
-Required by `api-response` to ensure structured and predictable outputs across modules.
-
----
-
-## Development
-
-### `laravel/framework`
-
-Used only during local development, testing, and tooling.
-
-### `elyerr/laravel-runtime`
-
-Provides Laravel-like functionality without requiring a full Laravel application.
-
----
-
-# Why Elymod?
-
-Elymod solves common challenges in modular development:
-
-* ❌ Tight coupling to the host application
-* ❌ Heavy framework dependencies
-* ❌ Fragile upgrades and forks
-* ❌ Poor module isolation
-* ❌ Difficult long-term maintenance
-
-With Elymod, modules are:
-
-* Independent
-* Portable
-* Versionable
-* Safe to install or remove
-* Isolated from core system failures
-
----
-
-# Designed for OAuth2 Passport Server v7+
-
-Elymod is optimized for OAuth2 Passport Server environments where:
-
-* Authentication and authorization remain centralized
-* Third-party modules evolve independently
-* Security and isolation are mandatory
-* Platform upgrades should not break extensions
-
-Each module manages its own:
-
-* Routes
-* Views
-* Policies
-* Middleware
-* Configuration
-* Frontend assets
-* Internal lifecycle
-
-while remaining isolated from the host application.
+> A fully isolated modular architecture where dependency management and scoping are unified through elyscope.
 
 ---
 
 # Development Philosophy
 
-> The platform owns authentication and authorization.
-> Modules own their business logic.
+> The core system owns identity and security.  
+> Modules own everything else.
 
-This separation allows the platform and its extensions to evolve independently while maintaining stability, security, and long-term maintainability.
+This ensures:
+
+- Stable authentication layer
+- Independent feature evolution
+- Safe scaling across organizations
+- Zero coupling between teams
 
 ---
 
@@ -226,25 +271,20 @@ This separation allows the platform and its extensions to evolve independently w
 
 MIT License.
 
-Individual modules may define their own licenses and distribution terms.
+Modules generated by Elymod may define their own licensing terms.
 
 ---
 
-# Author
+# Ecosystem Summary
 
-**Elvis Yerel Roman Concha**
-
-Email: [yerel9212@yahoo.es](mailto:yerel9212@yahoo.es)
-
----
-
-# Ecosystem
-
-* OAuth2 Passport Server
-* Elymod
-* Laravel Runtime
-* Third-party Elymod Modules
+- OAuth2 Passport Server v8 → Core platform
+- Elymod → Installer & module generator
+- elymod-app → Module skeleton
+- elyscope → Composer + PHP-Scoper bridge
+- laravel-runtime → Lightweight execution layer
 
 ---
 
-Elymod provides a clean, predictable, and Laravel-like environment for building independent modules without compromising platform stability, security, or maintainability.
+Elymod is not just a generator.
+
+It is the entry point to a **fully isolated modular ecosystem** designed for enterprise-scale systems built on OAuth2 Passport Server v8.
