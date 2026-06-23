@@ -1,6 +1,0 @@
-<?php
-
-
-/**
- * Register admin routes
- */

@@ -1,17 +1,21 @@
 {
-    "name": "elyerr/elymod",
-    "type": "project",
-    "description": "Elymod module project template",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Elymod\\Runtime\\": "runtime/"
-        }
-    },
-    "scripts": {
-        "post-create-project-cmd": [
-            "php runtime/postCreate.php"
-        ]
-    },
-    "minimum-stability": "dev"
+  "name": "elyerr/elymod",
+  "type": "project",
+  "description": "Elymod module project template",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Elymod\\": "src/"
+    }
+  },
+  "extra": {
+    "skeleton-version": "^1.0",
+    "skeleton-repository": "https://github.com/elyerrlabs/elymod-app.git"
+  },
+  "scripts": {
+    "post-create-project-cmd": [
+      "php src/postCreate.php"
+    ]
+  },
+  "minimum-stability": "dev"
 }
