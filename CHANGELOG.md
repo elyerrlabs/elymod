@@ -1,9 +1,35 @@
 # Changelog
 
-## Unrelease
+## [Unreleased]
 
-- Updated package.json dependencies
-- Migrate to api-response v2.0.0
+### Changed
+
+- Migrated project scaffolding to external skeleton repository (`elymod-app`).
+- Removed internal `stubs` system in favor of centralized template management.
+- Installer now relies entirely on `elymod-app` as the single source of truth for module structure.
+- Simplified module creation flow by removing Laravel Mix / Vite driver selection.
+- Standardized all module generation to use the Elymod App template.
+- Updated installer to support remote skeleton retrieval and processing.
+
+### Removed
+
+- Removed support for Laravel Mix frontend driver.
+- Removed support for Vite/Mix selection logic in module generation.
+- Removed internal stub-based scaffolding system.
+
+### Improved
+
+- Cleaner and more maintainable module creation pipeline.
+- Centralized template versioning via `elymod-app`.
+- Reduced duplication between Elymod core and module skeleton.
+- Improved consistency across generated modules.
+- Better separation of responsibilities between installer and skeleton.
+
+### Notes
+
+- Elymod now depends entirely on the `elymod-app` repository for module structure.
+- Future structural changes must be done inside `elymod-app`.
+- Installer is now responsible only for orchestration (clone, replace, setup), not scaffolding logic.
 
 ---
 
