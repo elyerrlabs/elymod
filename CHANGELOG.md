@@ -1,6 +1,18 @@
 # Changelog
 
-## [Unreleased]
+## [v3.0.2]
+
+- Fix Composer state before module generation to prevent autoload collisions
+
+---
+
+## [v3.0.1]
+
+- fix packagist installer
+
+---
+
+## [v3.0.0]
 
 ### Changed
 
