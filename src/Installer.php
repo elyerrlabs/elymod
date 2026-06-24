@@ -43,7 +43,6 @@ class Installer
                 $namespace,
                 $moduleKey
             );
-
             self::installDependencies($target);
             self::installNodeDependencies($target);
 
@@ -93,7 +92,7 @@ class Installer
             $package = $source['package'];
 
             $cmd = sprintf(
-                "composer  create-project  %s  %s  %s  --no-interaction",
+                "composer  create-project --no-cache  %s  %s  %s  --no-interaction",
                 escapeshellarg($package),
                 escapeshellarg($dst),
                 escapeshellarg($version)
@@ -172,7 +171,7 @@ class Installer
             new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)
         );
 
-        $search = ['ElymodApp', 'Elymod  App', 'elymod-app', 'elymod  app'];
+        $search = ['ElymodApp', 'Elymod  App', 'elymod-app', 'elymod app'];
         $replace = [$namespace, $module, $key, $key];
 
         foreach ($it as $file) {
@@ -205,7 +204,11 @@ class Installer
     {
         self::info("Installing  dependencies...");
 
-        exec("cd  {$path}  &&  elyscope  install", $code);
+        self::removeDir($path . '/vendor');
+        self::removeDir($path . '/vendor-build');
+        @unlink($path . '/composer.lock');
+
+        exec("cd {$path} && composer clear-cache && elyscope install", $output, $code);
 
         if ($code !== 0) {
             self::error("Dependency  install  failed");
@@ -222,7 +225,7 @@ class Installer
 
         self::info("Installing  node  dependencies...");
 
-        exec("cd  {$path}  &&  npm  ci  &&  npm  run  build", $code);
+        exec("cd  {$path}  &&  npm install", $code);
 
         if ($code !== 0) {
             self::error("Node  build  failed");
