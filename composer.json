@@ -1,8 +1,16 @@
 {
   "name": "elyerr/elymod",
   "type": "project",
-  "description": "Elymod module project template",
+  "description": "Scaffold a new Elymod module for development.",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Elvis Yerel Roman Concha",
+      "email": "yerel9212@yahoo.es",
+      "homepage": "https://github.com/elyerrlabs/elymod",
+      "role": "Owner"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "Elymod\\": "src/"
