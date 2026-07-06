@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [v3.0.3]
 
 - Fix file processing to replace `Elymod` placeholders with the new module name.
 - Update `composer.json` template.
