@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Fix file processing to replace `Elymod` placeholders with the new module name.
+- Update `composer.json` template.
+
+---
+
 ## [v3.0.2]
 
 - Fix Composer state before module generation to prevent autoload collisions
