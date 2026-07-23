@@ -171,8 +171,22 @@ class Installer
             new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)
         );
 
-        $search = ['ElymodApp', 'Elymod  App', 'Elymod App', 'elymod-app', 'elymod app'];
-        $replace = [$namespace, $module, $module, $key, $key];
+        $search = [
+            'ElymodApp', // namespace
+            'Elymod  App', // namespace
+            'Elymod App', // module name
+            'elymod-app', // config key
+            'elymod app', // module name
+            'elymod_model', // tag model 
+        ];
+        $replace = [
+            $namespace,
+            $module,
+            $module,
+            $key,
+            $key,
+            $key
+        ];
 
         foreach ($it as $file) {
             if (!$file->isFile())
